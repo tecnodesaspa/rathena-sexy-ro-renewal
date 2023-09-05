@@ -236,10 +236,10 @@ pvp_n_7-5,0,0	monster	Incantation Samurai	1492,2,60000,66000
 pvp_n_7-5,0,0	monster	Pharoh	1157,2,60000,66000
 pvp_n_7-5,0,0	monster	Dark Lord	1272,2,60000,66000
 pvp_n_7-5,0,0	monster	Baphomet	1039,2,60000,66000
-pvp_n_8-5,0,0	monster	Incantation Samurai	1492,3,60000,66000
-pvp_n_8-5,0,0	monster	Pharoh	1157,2,60000,66000
-pvp_n_8-5,0,0	monster	Dark Lord	1272,2,60000,66000
-pvp_n_8-5,0,0	monster	Baphomet	1039,2,60000,66000
+// pvp_n_8-5,0,0	monster	Incantation Samurai	1492,3,60000,66000
+// pvp_n_8-5,0,0	monster	Pharoh	1157,2,60000,66000
+// pvp_n_8-5,0,0	monster	Dark Lord	1272,2,60000,66000
+// pvp_n_8-5,0,0	monster	Baphomet	1039,2,60000,66000
 
 // Mapflags
 pvp_n_1-1	mapflag	pvp_nightmaredrop	off

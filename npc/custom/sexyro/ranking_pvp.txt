@@ -1,0 +1,50 @@
+pvp_n_8-5	mapflag	nomemo
+pvp_n_8-5	mapflag	nosave	SavePoint
+pvp_n_8-5	mapflag	noteleport
+pvp_n_8-5	mapflag	nowarp
+
+
+-	script	RankingPVP	-1,{
+OnPCKillEvent:
+    getmapxy .@map$,.@x,.@y;
+    if(.@map$ == "pvp_n_8-5"){
+        .@killIp$ = getcharip();
+        .@deathip$ = getcharip(killedrid);
+        // if(.@killIp$ != .@deathip$){
+            query_sql "INSERT INTO sexyro.pvpranking(`char_id`, `name`,`kill`,`death`) VALUES ("+ getcharid(0) +",'"+ escape_sql(strcharinfo(0)) +"', 1, 0) ON DUPLICATE KEY UPDATE `kill` = `kill` +1;";
+            query_sql("SELECT `char_id`, `name` FROM sexyro.char WHERE `account_id` = '"+killedrid+"' AND online = 1", .@charId, .@name$);
+            query_sql "INSERT INTO sexyro.pvpranking(`char_id`, `name`, `kill`, `death`) VALUES ("+ .@charId + ",'"+ .@name$ +"', 0, 1) ON DUPLICATE KEY UPDATE `death` = `death` +1;";
+            announce "[PVP]: "+ escape_sql(strcharinfo(0)) + " ha derrotado a "+.@name$,bc_all, 0x00f3ff;
+        // }
+    }
+    end;
+}
+
+prontera,147,190,5	script	Pvp#pvp_prt01	666,{
+    set .@npcName$, "[ ^ff0000Pvp^000000 ]";
+    
+    mes .@npcName$;
+    mes "Hola viajero.";
+    mes "Soy el NPC encargado de PVP, ¿Qué necesitas?.";
+    next;
+    switch (select("Ir a PVP:Ver Ranking")){
+        case 1:
+            announce "[PVP]: El jugador "+escape_sql(strcharinfo(0))+" ha entrado a PVP",bc_all, 0x00f3ff;
+            warp "pvp_n_8-5",0,0;
+            close2;
+            break;
+        case 2:
+            query_sql("SELECT `char_id`, `name`, `kill`, `death` FROM sexyro.pvpranking ORDER BY `kill` DESC LIMIT 10", .@charIds, .@names$, .@kills$, .@deaths$);
+            mes .@npcName$;
+            mes "V=Victorias / D=Derrotas";
+            mes "Ranking TOP 10:";
+            for(set .@i,0; .@i<10; set .@i,.@i+1){
+                if(.@charIds[.@i] > 0){
+                    mes .@i+1+". "+.@names$[.@i]+" - V = "+.@kills$[.@i]+" - D ="+.@deaths$[.@i];
+                }
+            }
+            close2;
+            break;
+    }
+    close;
+}
