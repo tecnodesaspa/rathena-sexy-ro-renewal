@@ -1,0 +1,17 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:5.5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootragnarok.123
+      MYSQL_USER: ragnarok
+      MYSQL_PASSWORD: ragnarok
+      MYSQL_DATABASE: ragnarok
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
